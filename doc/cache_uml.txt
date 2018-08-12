@@ -1,0 +1,89 @@
+@startuml
+
+left to right direction
+
+class Getter {
+	Get(Cache, Key, Fallback) Value
+}
+note top of Getter
+	Function that tries to return the Value at the Key from the Cache, using
+	the Fallback and storing the Value if the Cache doesn't have the value.
+end note
+Getter --> Cache
+
+together {
+	interface Cache
+	interface Decorator
+	interface DecoratorFactory
+}
+
+interface Cache {
+	Get(Key) (Value, Boolean)
+	Put(Key, Value)
+	Delete(Key)
+	Clear()
+}
+
+interface Decorator
+Decorator --|> Cache
+
+interface DecoratorFactory
+DecoratorFactory --> Decorator
+DecoratorFactory --> Cache
+
+class MemoryCache
+MemoryCache --|> Cache
+
+together {
+	class ThreadSafeDecorator
+	note right: Uses a WriteLocker or ReadLocker before operations.
+	class LogDecorator
+	note right: Logs deleting operations.
+	class ModifiedDecorator
+	note right: Deletes entries that have been modified since being added.
+	class TimeDecorator
+	note right: Deletes all entries every Duration.
+
+	class ThreadSafeDecoratorFactory
+	class LogDecoratorFactory
+	class ModifiedDecoratorFactory
+	class TimeDecoratorFactory
+}
+
+class ThreadSafeDecorator {
+	New(Cache, WriteLocker, ReadLocker)
+}
+ThreadSafeDecorator --|> Decorator
+
+class ThreadSafeDecoratorFactory
+ThreadSafeDecoratorFactory --|> DecoratorFactory
+ThreadSafeDecoratorFactory --> ThreadSafeDecorator
+
+class LogDecorator {
+	New(Cache, Writer, Name)
+}
+LogDecorator --|> Decorator
+
+class LogDecoratorFactory
+LogDecoratorFactory --|> DecoratorFactory
+LogDecoratorFactory --> LogDecorator
+
+class ModifiedDecorator {
+	New(Cache, TimeSource, HasBeenModified)
+}
+ModifiedDecorator --|> Decorator
+
+class ModifiedDecoratorFactory
+ModifiedDecoratorFactory --|> DecoratorFactory
+ModifiedDecoratorFactory --> ModifiedDecorator
+
+class TimeDecorator {
+	New(Cache, TimeSource, Duration)
+}
+TimeDecorator --|> Decorator
+
+class TimeDecoratorFactory
+TimeDecoratorFactory --|> DecoratorFactory
+TimeDecoratorFactory --> TimeDecorator
+
+@enduml
