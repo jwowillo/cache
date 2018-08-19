@@ -3,7 +3,7 @@ package cache_test
 import (
 	"testing"
 
-	"github.com/jwowillo/cache"
+	"gopkg.in/jwowillo/cache.v2"
 )
 
 // TestCompose tests that Compose composes DecoratorFactorys and does so in the

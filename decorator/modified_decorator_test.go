@@ -1,31 +1,32 @@
-package cache_test
+package decorator_test
 
 import (
 	"testing"
 	"time"
 
-	"github.com/jwowillo/cache"
+	"gopkg.in/jwowillo/cache.v2"
+	"gopkg.in/jwowillo/cache.v2/decorator"
+	"gopkg.in/jwowillo/cache.v2/memory"
 )
 
-// TestModifiedDecoratorGet tests that ModifiedDecorator's Get deletes stale
-// entries without calling the decorated Cache's Get and returns valid entries
-// with calling the decorated Cache's Get.
+// TestChangedDecoratorGet tests that ChangedDecorator's Get deletes stale
+// entries without calling the decorated cache.Cache's Get and returns valid
+// entries with calling the decorated cache.Cache's Get.
 //
-// Depends on Put and MemoryCache working.
-func TestModifiedDecoratorGet(t *testing.T) {
+// Depends on Put and memory.Cache working.
+func TestChangedDecoratorGet(t *testing.T) {
 	var keyCalledWith cache.Key
 	var timeCalledWith time.Time
-	isModified := false
+	isChanged := false
 	ts := &MockTimeSource{}
 	ts.Step()
 	mc := &MockCache{}
-	c := cache.NewModifiedDecoratorFactory(
-		cache.NewMemoryCache(),
-		ts.Time,
+	c := decorator.NewChangedDecoratorFactory(
+		memory.NewCache(), ts.Time,
 		func(k cache.Key, t time.Time) bool {
 			keyCalledWith = k
 			timeCalledWith = t
-			return isModified
+			return isChanged
 		})(mc)
 
 	if _, ok := c.Get("k"); ok {
@@ -51,7 +52,7 @@ func TestModifiedDecoratorGet(t *testing.T) {
 			mc.DeleteCalledWith, []cache.Key{})
 	}
 
-	isModified = true
+	isChanged = true
 
 	c.Get("k")
 	if len(mc.GetCalledWith) != 1 {
@@ -64,33 +65,33 @@ func TestModifiedDecoratorGet(t *testing.T) {
 	}
 }
 
-// TestModifiedDecoratorPut tests that ModifiedDecorator decorates the decorated
-// Cache's Put properly.
-func TestModifiedDecoratorPut(t *testing.T) {
+// TestChangedDecoratorPut tests that ChangedDecorator decorates the decorated
+// cache.Cache's Put properly.
+func TestChangedDecoratorPut(t *testing.T) {
 	ts := &MockTimeSource{}
-	f := cache.NewModifiedDecoratorFactory(
+	f := decorator.NewChangedDecoratorFactory(
 		&MockCache{},
 		ts.Time,
 		func(cache.Key, time.Time) bool { return false })
 	DecoratorPutTest(t, f)
 }
 
-// TestModifiedDecoratorPut tests that ModifiedDecorator decorates the decorated
-// Cache's Delete properly.
-func TestModifiedDecoratorDelete(t *testing.T) {
+// TestChangedDecoratorPut tests that ChangedDecorator decorates the decorated
+// cache.Cache's Delete properly.
+func TestChangedDecoratorDelete(t *testing.T) {
 	ts := &MockTimeSource{}
-	f := cache.NewModifiedDecoratorFactory(
+	f := decorator.NewChangedDecoratorFactory(
 		&MockCache{},
 		ts.Time,
 		func(cache.Key, time.Time) bool { return false })
 	DecoratorDeleteTest(t, f)
 }
 
-// TestModifiedDecoratorPut tests that ModifiedDecorator decorates the decorated
-// Cache's Clear properly.
-func TestModifiedDecoratorClear(t *testing.T) {
+// TestChangedDecoratorPut tests that ChangedDecorator decorates the decorated
+// cache.Cache's Clear properly.
+func TestChangedDecoratorClear(t *testing.T) {
 	ts := &MockTimeSource{}
-	f := cache.NewModifiedDecoratorFactory(
+	f := decorator.NewChangedDecoratorFactory(
 		&MockCache{},
 		ts.Time,
 		func(cache.Key, time.Time) bool { return false })

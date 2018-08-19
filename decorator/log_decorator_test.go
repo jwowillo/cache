@@ -1,4 +1,4 @@
-package cache_test
+package decorator_test
 
 import (
 	"bytes"
@@ -6,13 +6,13 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/jwowillo/cache"
+	"gopkg.in/jwowillo/cache.v2/decorator"
 )
 
 // TestLogDecoratorDeleteLogs tests that LogDecorator's Delete logs.
 func TestLogDecoratorDeleteLogs(t *testing.T) {
 	b := &bytes.Buffer{}
-	c := cache.NewLogDecorator(&MockCache{}, b, "test")
+	c := decorator.NewLogDecorator(&MockCache{}, b, "test")
 	c.Delete("k")
 	bs, err := ioutil.ReadAll(b)
 	if err != nil {
@@ -34,7 +34,7 @@ func TestLogDecoratorDeleteLogs(t *testing.T) {
 // TestLogDecoratorClearLogs test that LogDecorator's Clear logs.
 func TestLogDecoratorClearLogs(t *testing.T) {
 	b := &bytes.Buffer{}
-	c := cache.NewLogDecorator(&MockCache{}, b, "test")
+	c := decorator.NewLogDecorator(&MockCache{}, b, "test")
 	c.Clear()
 	bs, err := ioutil.ReadAll(b)
 	if err != nil {
@@ -55,6 +55,6 @@ func TestLogDecoratorClearLogs(t *testing.T) {
 
 // TestLogDecorator tests that LogDecorator decorates properly.
 func TestLogDecorator(t *testing.T) {
-	f := cache.NewLogDecoratorFactory(&bytes.Buffer{}, "test")
+	f := decorator.NewLogDecoratorFactory(&bytes.Buffer{}, "test")
 	DecoratorTest(t, f)
 }

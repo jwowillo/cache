@@ -1,17 +1,17 @@
-package cache_test
+package memory_test
 
 import (
 	"testing"
 
-	"github.com/jwowillo/cache"
+	"gopkg.in/jwowillo/cache.v2/memory"
 )
 
-// TestMemoryCacheGetAndPut tests that MemoryCache's Get and Put store and
-// retrieve values correctly.
+// TestCacheGetAndPut tests that Cache's Get and Put store and retrieve values
+// correctly.
 //
 // Get and Put are tested together because they depend on each other.
-func TestMemoryCacheGetAndPut(t *testing.T) {
-	c := cache.NewMemoryCache()
+func TestCacheGetAndPut(t *testing.T) {
+	c := memory.NewCache()
 
 	if _, ok := c.Get("a"); ok {
 		t.Errorf("c.Get(%s) = true, want false", "a")
@@ -33,12 +33,12 @@ func TestMemoryCacheGetAndPut(t *testing.T) {
 	}
 }
 
-// TestMemoryCacheDelete tests that MemoryCache's Delete deletes elements at the
-// correct keys if they exist and does nothing otherwise.
+// TestCacheDelete tests that Cache's Delete deletes elements at the correct
+// keys if they exist and does nothing otherwise.
 //
 // Assumes Get and Put work.
-func TestMemoryCacheDelete(t *testing.T) {
-	c := cache.NewMemoryCache()
+func TestCacheDelete(t *testing.T) {
+	c := memory.NewCache()
 
 	c.Put("a", 1)
 	c.Put("b", 2)
@@ -64,12 +64,12 @@ func TestMemoryCacheDelete(t *testing.T) {
 	}
 }
 
-// TestMemoryCacheClear tests that MemoryCache's Clear clears the Cache and does
-// nothing if the Cache is empty.
+// TestCacheClear tests that Cache's Clear clears the Cache and does nothing if
+// the Cache is empty.
 //
 // Assumes Get and Put work.
-func TestMemoryCacheClear(t *testing.T) {
-	c := cache.NewMemoryCache()
+func TestCacheClear(t *testing.T) {
+	c := memory.NewCache()
 
 	c.Put("a", 1)
 	c.Put("b", 2)
