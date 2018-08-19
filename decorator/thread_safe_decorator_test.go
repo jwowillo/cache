@@ -1,9 +1,9 @@
-package cache_test
+package decorator_test
 
 import (
 	"testing"
 
-	"github.com/jwowillo/cache"
+	"gopkg.in/jwowillo/cache.v2/decorator"
 )
 
 type MockLocker struct {
@@ -20,11 +20,11 @@ func (l *MockLocker) Unlock() {
 }
 
 // TestThreadSafeDecoratorGetRLocksAndRUnlocks tests that the read sync.Locker
-// is called by the Decorator's Get.
+// is called by the cache.Decorator's Get.
 func TestThreadSafeDecoratorGetRLocksAndRUnlocks(t *testing.T) {
 	l := &MockLocker{}
 	rl := &MockLocker{}
-	c := cache.NewThreadSafeDecorator(&MockCache{}, l, rl)
+	c := decorator.NewThreadSafeDecorator(&MockCache{}, l, rl)
 	c.Get("")
 	if l.LockCount != 0 {
 		t.Errorf("l.LockCount = %d, want %d", l.LockCount, 0)
@@ -41,11 +41,11 @@ func TestThreadSafeDecoratorGetRLocksAndRUnlocks(t *testing.T) {
 }
 
 // TestThreadSafeDecoratorPutLocksAndUnlocks tests that the write sync.Locker is
-// called by the Decorator's Put.
+// called by the cache.Decorator's Put.
 func TestThreadSafeDecoratorPutLocksAndUnlocks(t *testing.T) {
 	l := &MockLocker{}
 	rl := &MockLocker{}
-	c := cache.NewThreadSafeDecorator(&MockCache{}, l, rl)
+	c := decorator.NewThreadSafeDecorator(&MockCache{}, l, rl)
 	c.Put("", nil)
 	if l.LockCount != 1 {
 		t.Errorf("l.LockCount = %d, want %d", l.LockCount, 1)
@@ -62,11 +62,11 @@ func TestThreadSafeDecoratorPutLocksAndUnlocks(t *testing.T) {
 }
 
 // TestThreadSafeDecoratorDeleteLocksAndUnlocks tests that the write sync.Locker
-// is called by the Decorator's Delete.
+// is called by the cache.Decorator's Delete.
 func TestThreadSafeDecoratorDeleteLocksAndUnlocks(t *testing.T) {
 	l := &MockLocker{}
 	rl := &MockLocker{}
-	c := cache.NewThreadSafeDecorator(&MockCache{}, l, rl)
+	c := decorator.NewThreadSafeDecorator(&MockCache{}, l, rl)
 	c.Delete("")
 	if l.LockCount != 1 {
 		t.Errorf("l.LockCount = %d, want %d", l.LockCount, 1)
@@ -83,11 +83,11 @@ func TestThreadSafeDecoratorDeleteLocksAndUnlocks(t *testing.T) {
 }
 
 // TestThreadSafeDecoratorClearLocksAndUnlocks tests that the write sync.Locker
-// is called by the Decorator's Clear.
+// is called by the cache.Decorator's Clear.
 func TestThreadSafeDecoratorClearLocksAndUnlocks(t *testing.T) {
 	l := &MockLocker{}
 	rl := &MockLocker{}
-	c := cache.NewThreadSafeDecorator(&MockCache{}, l, rl)
+	c := decorator.NewThreadSafeDecorator(&MockCache{}, l, rl)
 	c.Clear()
 	if l.LockCount != 1 {
 		t.Errorf("l.LockCount = %d, want %d", l.LockCount, 1)
@@ -105,6 +105,7 @@ func TestThreadSafeDecoratorClearLocksAndUnlocks(t *testing.T) {
 
 // TestThreadSafeDecorator tests that ThreadSafeDecorator decorates properly.
 func TestThreadSafeDecorator(t *testing.T) {
-	f := cache.NewThreadSafeDecoratorFactory(&MockLocker{}, &MockLocker{})
+	f := decorator.NewThreadSafeDecoratorFactory(
+		&MockLocker{}, &MockLocker{})
 	DecoratorTest(t, f)
 }

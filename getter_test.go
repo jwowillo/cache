@@ -3,19 +3,23 @@ package cache_test
 import (
 	"testing"
 
-	"github.com/jwowillo/cache"
+	"gopkg.in/jwowillo/cache.v2"
 )
 
-// TestGet tests that Get tries to get from the Cache first, then calls the
-// Fallback, stores Values from the Fallback back into the Cache, and returns
-// the correct Values.
-func TestGet(t *testing.T) {
+// TestFallbackGetter tests that Get tries to get from the Cache first, then
+// calls the Getter, stores Values from the Getter back into the Cache, and
+// returns the correct Values.
+func TestFallbackGetter(t *testing.T) {
 	var fallbackCalledWith cache.Key
 	mc := &MockCache{}
-	v := cache.Get(mc, "k", func(k cache.Key) cache.Value {
-		fallbackCalledWith = k
-		return 1
-	})
+	g := cache.NewFallbackGetter(
+		mc,
+		cache.GetterFunc(func(k cache.Key) cache.Value {
+			fallbackCalledWith = k
+			return 1
+		}))
+
+	v := g.Get("k")
 	if len(mc.GetCalledWith) != 1 || mc.GetCalledWith[0] != "k" {
 		t.Errorf("mc.GetCalledWith = %v, want %v",
 			mc.GetCalledWith, []cache.Key{"k"})

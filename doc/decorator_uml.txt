@@ -1,0 +1,44 @@
+@startuml
+
+left to right direction
+
+interface cache.Decorator
+interface cache.DecoratorFactory
+
+class ThreadSafeDecorator {
+	New(cache.Cache, WriteLocker, ReadLocker)
+}
+note right: Uses a WriteLocker or ReadLocker before operations.
+ThreadSafeDecorator --|> cache.Decorator
+class ThreadSafeDecoratorFactory
+ThreadSafeDecoratorFactory --|> cache.DecoratorFactory
+ThreadSafeDecoratorFactory --> ThreadSafeDecorator
+
+class LogDecorator {
+	New(cache.Cache, Writer, Name)
+}
+note right: Logs deleting operations.
+LogDecorator --|> cache.Decorator
+class LogDecoratorFactory
+LogDecoratorFactory --|> cache.DecoratorFactory
+LogDecoratorFactory --> LogDecorator
+
+class ChangedDecorator {
+	New(cache.Cache, TimeSource, HasBeenChanged)
+}
+note right: Deletes entries that have been changed since being added.
+ChangedDecorator --|> cache.Decorator
+class ChangedDecoratorFactory
+ChangedDecoratorFactory --|> cache.DecoratorFactory
+ChangedDecoratorFactory --> ChangedDecorator
+
+class TimeDecorator {
+	New(cache.Cache, TimeSource, Duration)
+}
+note right: Deletes all entries every Duration.
+TimeDecorator --|> cache.Decorator
+class TimeDecoratorFactory
+TimeDecoratorFactory --|> cache.DecoratorFactory
+TimeDecoratorFactory --> TimeDecorator
+
+@enduml

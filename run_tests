@@ -2,4 +2,4 @@
 
 # run_tests and show coverage.
 
-go test --cover
+go test --cover ./...
