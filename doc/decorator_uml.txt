@@ -23,14 +23,14 @@ class LogDecoratorFactory
 LogDecoratorFactory --|> cache.DecoratorFactory
 LogDecoratorFactory --> LogDecorator
 
-class ModifiedDecorator {
-	New(cache.Cache, TimeSource, HasBeenModified)
+class ChangedDecorator {
+	New(cache.Cache, TimeSource, HasBeenChanged)
 }
-note right: Deletes entries that have been modified since being added.
-ModifiedDecorator --|> cache.Decorator
-class ModifiedDecoratorFactory
-ModifiedDecoratorFactory --|> cache.DecoratorFactory
-ModifiedDecoratorFactory --> ModifiedDecorator
+note right: Deletes entries that have been changed since being added.
+ChangedDecorator --|> cache.Decorator
+class ChangedDecoratorFactory
+ChangedDecoratorFactory --|> cache.DecoratorFactory
+ChangedDecoratorFactory --> ChangedDecorator
 
 class TimeDecorator {
 	New(cache.Cache, TimeSource, Duration)

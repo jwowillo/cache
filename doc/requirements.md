@@ -5,7 +5,7 @@
    `TimeDecorator` into a sub-package called `decorator`.
 3. Move `DefaultLockers`, `DefaultWriter`, `DefaultHasBeenModified`,
    `DefaultTimeSource`, `DefaultModifiedCache`, and `DefaultTimeCache` into a
-   sub-package called `default`.
+   sub-package called `standard`.
 4. Rename `Fallback` to `Getter` and make an interface, provide a `GetterFunc`
    wrapper, and make `Get` into a struct that implements `Getter` called
    `FallbackGetter`.

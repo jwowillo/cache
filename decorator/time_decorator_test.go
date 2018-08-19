@@ -1,10 +1,12 @@
-package cache_test
+package decorator_test
 
 import (
 	"testing"
 	"time"
 
-	"github.com/jwowillo/cache"
+	"gopkg.in/jwowillo/cache.v2"
+	"gopkg.in/jwowillo/cache.v2/decorator"
+	"gopkg.in/jwowillo/cache.v2/memory"
 )
 
 type MockTimeSource struct {
@@ -19,16 +21,16 @@ func (ts *MockTimeSource) Time() time.Time {
 	return ts.current
 }
 
-// TestTimeDecoratorGet tests that only the decoratored Cache's Get is called if
-// the time isn't after the time.Duration and only the decorated Cache's Clear
-// is called if the time is after the time.Duration.
+// TestTimeDecoratorGet tests that only the decoratored cache.Cache's Get is
+// called if the time isn't after the time.Duration and only the decorated
+// cache.Cache's Clear is called if the time is after the time.Duration.
 //
-// Depends on MemoryCache working.
+// Depends on memory.Cache working.
 func TestTimeDecoratorGet(t *testing.T) {
 	ts := &MockTimeSource{}
 	mc := &MockCache{}
-	c := cache.NewTimeDecoratorFactory(
-		cache.NewMemoryCache(), ts.Time, 0)(mc)
+	c := decorator.NewTimeDecoratorFactory(
+		memory.NewCache(), ts.Time, 0)(mc)
 	c.Get("k1")
 	if len(mc.GetCalledWith) != 1 || mc.GetCalledWith[0] != "k1" {
 		t.Errorf("mc.GetCalledWith = %v, want %v",
@@ -50,26 +52,26 @@ func TestTimeDecoratorGet(t *testing.T) {
 	}
 }
 
-// TestTimeDecoratorPut tests that TimeDecorator decorates the decorated Cache's
-// Put properly.
+// TestTimeDecoratorPut tests that TimeDecorator decorates the decorated
+// cache.Cache's Put properly.
 func TestTimeDecoratorPut(t *testing.T) {
 	mc := MockTimeSource{}
-	f := cache.NewTimeDecoratorFactory(&MockCache{}, mc.Time, 0)
+	f := decorator.NewTimeDecoratorFactory(&MockCache{}, mc.Time, 0)
 	DecoratorPutTest(t, f)
 }
 
-// TestTimeDecoratorPut tests that TimeDecorator decorates the decorated Cache's
-// Delete properly.
+// TestTimeDecoratorPut tests that TimeDecorator decorates the decorated
+// cache.Cache's Delete properly.
 func TestTimeDecoratorDelete(t *testing.T) {
 	mc := MockTimeSource{}
-	f := cache.NewTimeDecoratorFactory(&MockCache{}, mc.Time, 0)
+	f := decorator.NewTimeDecoratorFactory(&MockCache{}, mc.Time, 0)
 	DecoratorDeleteTest(t, f)
 }
 
-// TestTimeDecoratorPut tests that TimeDecorator decorates the decorated Cache's
-// Clear properly.
+// TestTimeDecoratorPut tests that TimeDecorator decorates the decorated
+// cache.Cache's Clear properly.
 func TestTimeDecoratorClear(t *testing.T) {
 	mc := MockTimeSource{}
-	f := cache.NewTimeDecoratorFactory(&MockCache{}, mc.Time, 0)
+	f := decorator.NewTimeDecoratorFactory(&MockCache{}, mc.Time, 0)
 	DecoratorClearTest(t, f)
 }

@@ -12,7 +12,7 @@
 
 ![`cache/decorator` Design](decorator_uml.png)
 
-## `cache/default`
+## `cache/standard`
 
 * `DefaultLockers`, `DefaultWriter`, `DefaultHasBeenModified`,
   `DefaultTimeSource`, `DefaultModifiedCache`, and `DefaultTimeCache` will be

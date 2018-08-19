@@ -5,7 +5,7 @@ onto basic caches.
 
 ## Install
 
-`go get github.com/jwowillo/cache`
+`go get gopkg.in/jwowillo/cache.v2`
 
 ## Run `run_tests`
 
