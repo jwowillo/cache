@@ -1,3 +1,15 @@
+# v2.0.0 Requirements
+
+1. Move `MemoryCache` into a sub-package called `cache`.
+2. Move `LogDecorator`, `ModifiedDecorator`, `ThreadSafeDecorator`, and
+   `TimeDecorator` into a sub-package called `decorator`.
+3. Move `DefaultLockers`, `DefaultWriter`, `DefaultHasBeenModified`,
+   `DefaultTimeSource`, `DefaultModifiedCache`, and `DefaultTimeCache` into a
+   sub-package called `default`.
+4. Rename `Fallback` to `Getter` and make an interface. Provide a `GetterFunc`
+   wrapper. Make `Get` into a struct that implements `Getter` called
+   `CacheGetter`.
+
 # v1.0.0 Requirements
 
 1. Provide an in-memory cache which is thread-safe, logs, and clears itself
