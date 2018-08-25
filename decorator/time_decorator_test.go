@@ -4,9 +4,9 @@ import (
 	"testing"
 	"time"
 
-	"gopkg.in/jwowillo/cache.v2"
-	"gopkg.in/jwowillo/cache.v2/decorator"
-	"gopkg.in/jwowillo/cache.v2/memory"
+	"github.com/jwowillo/cache/v2"
+	"github.com/jwowillo/cache/v2/decorator"
+	"github.com/jwowillo/cache/v2/memory"
 )
 
 type MockTimeSource struct {

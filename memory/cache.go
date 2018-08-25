@@ -1,7 +1,7 @@
 // Package memory contains a cache.Cache implementation which stores in memory.
 package memory
 
-import "gopkg.in/jwowillo/cache.v2"
+import "github.com/jwowillo/cache/v2"
 
 // Cache which stores cache.Values at cache.Keys in memory.
 type Cache struct {

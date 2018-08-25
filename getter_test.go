@@ -3,7 +3,7 @@ package cache_test
 import (
 	"testing"
 
-	"gopkg.in/jwowillo/cache.v2"
+	"github.com/jwowillo/cache/v2"
 )
 
 // TestFallbackGetter tests that Get tries to get from the Cache first, then

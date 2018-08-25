@@ -4,7 +4,7 @@ import (
 	"io"
 	"log"
 
-	"gopkg.in/jwowillo/cache.v2"
+	"github.com/jwowillo/cache/v2"
 )
 
 // LogDecorator is a cache.Decorator which logs deleting actions on

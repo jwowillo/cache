@@ -3,7 +3,7 @@ package memory_test
 import (
 	"testing"
 
-	"gopkg.in/jwowillo/cache.v2/memory"
+	"github.com/jwowillo/cache/v2/memory"
 )
 
 // TestCacheGetAndPut tests that Cache's Get and Put store and retrieve values

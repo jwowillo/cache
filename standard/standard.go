@@ -6,9 +6,9 @@ import (
 	"sync"
 	"time"
 
-	"gopkg.in/jwowillo/cache.v2"
-	"gopkg.in/jwowillo/cache.v2/decorator"
-	"gopkg.in/jwowillo/cache.v2/memory"
+	"github.com/jwowillo/cache/v2"
+	"github.com/jwowillo/cache/v2/decorator"
+	"github.com/jwowillo/cache/v2/memory"
 )
 
 // TimeCache returns a thread-safe cache.Cache that logs to STDOUT with prefix
