@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"gopkg.in/jwowillo/cache.v2/decorator"
+	"github.com/jwowillo/cache/v2/decorator"
 )
 
 // TestLogDecoratorDeleteLogs tests that LogDecorator's Delete logs.

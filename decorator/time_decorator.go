@@ -3,7 +3,7 @@ package decorator
 import (
 	"time"
 
-	"gopkg.in/jwowillo/cache.v2"
+	"github.com/jwowillo/cache/v2"
 )
 
 // key for last clear.

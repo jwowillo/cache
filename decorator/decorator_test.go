@@ -3,7 +3,7 @@ package decorator_test
 import (
 	"testing"
 
-	"gopkg.in/jwowillo/cache.v2"
+	"github.com/jwowillo/cache/v2"
 )
 
 type MockCache struct {

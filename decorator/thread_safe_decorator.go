@@ -3,7 +3,7 @@ package decorator
 import (
 	"sync"
 
-	"gopkg.in/jwowillo/cache.v2"
+	"github.com/jwowillo/cache/v2"
 )
 
 // ThreadSafeDecorator is a cache.Decorator which makes all cache.Cache
