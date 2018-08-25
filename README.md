@@ -5,7 +5,7 @@ onto basic caches.
 
 ## Install
 
-`go get github.com/jwowillo/cache@v2`
+`go get github.com/jwowillo/cache/v2`
 
 ## Run `run_tests`
 
