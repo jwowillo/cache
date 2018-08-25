@@ -1,3 +1,7 @@
+# v2.1.0 Design
+
+* Create a module for the version (1).
+
 # v2.0.0 Design
 
 ## `cache` (4)
