@@ -1,3 +1,7 @@
+# v2.1.0 Requirements
+
+1. Use Go modules for versioning
+
 # v2.0.0 Requirements
 
 1. Move `MemoryCache` into a sub-package called `memory`.
