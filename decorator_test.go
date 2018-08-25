@@ -3,7 +3,7 @@ package cache_test
 import (
 	"testing"
 
-	"gopkg.in/jwowillo/cache.v2"
+	"github.com/jwowillo/cache/v2"
 )
 
 // TestCompose tests that Compose composes DecoratorFactorys and does so in the
@@ -25,7 +25,7 @@ func TestCompose(t *testing.T) {
 
 	cache.Compose()(nil)
 	if len(order) != 0 {
-		t.Error("order == %v, want %v", order, nil)
+		t.Errorf("order == %v, want %v", order, nil)
 	}
 	order = nil
 

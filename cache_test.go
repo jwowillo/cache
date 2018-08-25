@@ -1,6 +1,6 @@
 package cache_test
 
-import "gopkg.in/jwowillo/cache.v2"
+import "github.com/jwowillo/cache/v2"
 
 type MockCache struct {
 	GetCalledWith       []cache.Key

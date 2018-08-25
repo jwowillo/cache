@@ -3,7 +3,7 @@ package decorator
 import (
 	"time"
 
-	"gopkg.in/jwowillo/cache.v2"
+	"github.com/jwowillo/cache/v2"
 )
 
 // HasBeenChanged returns true if the cache.Key has been changed since the
